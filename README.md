@@ -7,6 +7,7 @@ O objetivo é registrar início e fim de atividades realizadas em ambiente corpo
 O sistema pode ser executado diretamente via Python ou distribuído como executável .exe, facilitando o uso por pessoas que não precisam ter Python instalado.
 
 🧱 Arquitetura do Projeto
+```text
 registro_atividades/
 ├── src/
 │   ├── __init__.py            # Inicialização do módulo
@@ -22,8 +23,9 @@ registro_atividades/
 ├── .env                       # Configurações sensíveis (chaves Supabase)
 ├── requirements.txt           # Dependências do projeto
 ├── README.md                  # Documentação
-├── .gitignore                 # Ignora venv/, __pycache__/, build/, dist/, etc.
+├── .gitignore                 # Ignora venv/, __pycache__/, build/, dist/ etc.
 └── setup.py                   # (Opcional) Instalação via pip -e
+```
 
 🚀 Como Executar Localmente
 🔽 1. Clonar o repositório
