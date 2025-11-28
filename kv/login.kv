@@ -1,60 +1,102 @@
 #:import dp kivy.metrics.dp
+# importa a função dp (density-independent pixels) para usar medidas escaláveis entre telas
 
 <LoginScreen>:
+    # define o template para a tela de login (associada à classe LoginScreen em Python)
     name: 'login'
+    # nome usado para trocar telas via ScreenManager
+
     BoxLayout:
+        # layout principal vertical que organiza todos os elementos um abaixo do outro
         orientation: 'vertical'
         padding: dp(16)
+        # espaço interno em torno do conteúdo (16 dp)
         spacing: dp(10)
+        # espaço entre widgets filhos (10 dp)
         size_hint: 1, 1
+        # ocupa todo o espaço disponível do parent
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # centraliza o box no parent (útil em janelas redimensionáveis)
 
         # Logo no topo (assets/logo.png)
         Image:
+            # widget para exibir a logo do app
             id: login_logo
+            # id para referenciar/atualizar imagem via Python, se necessário
             source: 'assets/logo.png'
+            # caminho relativo da imagem (coloque em assets/logo.png)
             size_hint_y: None
+            # desativa size_hint vertical para usar altura fixa
             height: dp(110)
+            # altura fixa de 110 dp para aparência consistente
             allow_stretch: True
+            # permite esticar a imagem para preencher a área (quando necessário)
             keep_ratio: True
+            # preserva a proporção original da imagem ao redimensionar
             pos_hint: {"center_x": 0.5}
+            # centraliza horizontalmente a imagem
 
         # Título
         Label:
+            # rótulo que orienta o usuário a inserir credenciais
             text: "Insira seu login e sua senha"
             size_hint_y: None
+            # altura fixa para o rótulo (não cresce)
             height: dp(28)
+            # 28 dp de altura
             font_size: dp(16)
+            # tamanho da fonte
             halign: "center"
+            # centraliza horizontalmente o texto
             valign: "middle"
+            # centraliza verticalmente
             color: 0,0,0,1
+            # cor do texto (preto)
 
         Widget:
+            # espaçador fino entre título e campos de entrada
             size_hint_y: None
             height: dp(8)
 
         # Campos de entrada (menores)
         BoxLayout:
+            # container vertical para os campos de username e password
             orientation: 'vertical'
             size_hint_y: None
+            # controla altura manualmente
             height: dp(110)
+            # altura total para os dois campos e espaçamento
             spacing: dp(8)
+            # espaçamento entre os campos
             padding: dp(8), 0
+            # padding horizontal pequeno (8 dp) e zero vertical no topo/baixo
 
             TextInput:
+                # campo para o nome de usuário
                 id: username
+                # id usado no Python para ler o texto
                 hint_text: "Usuário"
+                # texto de dica quando vazio
                 size_hint_x: 0.85
+                # largura ocupa 85% do espaço horizontal do parent
                 pos_hint: {"center_x": 0.5}
+                # centraliza horizontalmente
                 height: dp(40)
+                # altura de 40 dp (campo compacto)
                 multiline: False
+                # desativa múltiplas linhas — apenas uma linha de entrada
                 write_tab: False
+                # tecla Tab não insere tabulação dentro do TextInput
                 font_size: dp(14)
+                # tamanho da fonte do texto
 
             TextInput:
+                # campo para senha
                 id: password
                 hint_text: "Senha"
+                # dica que indica o campo de senha
                 password: True
+                # oculta o texto digitado (pontos/asteriscos)
                 size_hint_x: 0.85
                 pos_hint: {"center_x": 0.5}
                 height: dp(40)
@@ -63,40 +105,55 @@
                 font_size: dp(14)
 
         Widget:
+            # pequeno espaçador entre campos e botões
             size_hint_y: None
             height: dp(6)
 
         # Botões
         BoxLayout:
+            # container horizontal para os botões de ação
             size_hint_y: None
             height: dp(48)
             spacing: dp(8)
             padding: dp(8)
 
             Button:
+                # botão de login/entrar
                 text: "Entrar"
                 size_hint_x: 0.48
+                # ocupa 48% da largura do BoxLayout de botões
                 on_release: root.fazer_login(username.text, password.text)
+                # ao soltar o clique chama o método fazer_login na tela (passando os textos)
                 background_normal: ''
+                # remove background padrão (imagem) para usar cor sólida
                 background_color: (0.16, 0.5, 0.5, 1)
+                # cor do botão (teal)
                 color: 1,1,1,1
+                # cor do texto do botão (branco)
 
             Button:
+                # botão para criar nova conta localmente
                 text: "Criar conta"
                 size_hint_x: 0.34
+                # ocupa 34% da largura
                 on_release: root.criar_conta_popup()
+                # abre o popup de criação de conta
                 background_normal: ''
                 background_color: (0.2, 0.6, 0.8, 1)
                 color: 1,1,1,1
 
             Button:
+                # botão para sair da aplicação
                 text: "Sair"
                 size_hint_x: 0.18
+                # ocupa 18% restante da largura
                 on_release: app.stop()
+                # chama app.stop() para fechar a aplicação
                 background_normal: ''
                 background_color: (0.6,0.6,0.6,1)
                 color: 1,1,1,1
 
         Widget:
+            # espaçador final para dar folga inferior na tela
             size_hint_y: None
             height: dp(8)

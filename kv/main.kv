@@ -1,138 +1,245 @@
 #:import dp kivy.metrics.dp
+# importa a função dp (density-independent pixels) para usar medidas que se adaptam a diferentes densidades de tela
 
 <MainScreen>:
+    # define o template para a tela MainScreen (ligada à classe Python MainScreen)
     name: 'main'
+    # nome usado pelo ScreenManager para referenciar esta tela
+
     BoxLayout:
+        # layout principal que organiza os elementos verticalmente
         orientation: 'vertical'
+        # define a direção (vertical = de cima para baixo)
         padding: dp(8)
+        # padding interno ao redor do BoxLayout (8 dp)
         spacing: dp(8)
+        # espaçamento entre os filhos deste BoxLayout (8 dp)
 
         # === LOGO NO TOPO ===
         Image:
+            # widget para exibir imagem (logo)
             id: top_logo
+            # id para referenciar no Python se necessário
             source: 'assets/logo.png'   # coloque sua imagem em assets/logo.png
+            # caminho relativo para a imagem a ser exibida
             size_hint_y: None
+            # desliga o size_hint vertical para usar altura fixa
             height: dp(120)
+            # altura fixa de 120 dp para a imagem
             allow_stretch: True
+            # permite a imagem esticar para preencher espaço (segurança)
             keep_ratio: True
+            # preserva a proporção da imagem ao ajustar tamanho
             pos_hint: {"center_x": 0.5}
+            # centraliza horizontalmente
 
         # === TÍTULO / CABEÇALHO ===
         BoxLayout:
+            # container horizontal (padrão) para o cabeçalho
             size_hint_y: None
+            # altura fixa do cabeçalho
             height: dp(48)
+            # 48 dp de altura
             padding: dp(8)
+            # padding interno no cabeçalho
             canvas.before:
+                # desenha formas antes de renderizar filhos — usado para o fundo colorido
                 Color:
                     rgba: 0.16, 0.5, 0.5, 1
+                    # cor de fundo (teal) em formato RGBA 0..1
                 Rectangle:
                     pos: self.pos
+                    # posiciona o retângulo exatamente na área do BoxLayout
                     size: self.size
+                    # tamanho do retângulo corresponde ao tamanho do BoxLayout
+
             Label:
+                # rótulo para o título do app dentro do cabeçalho
                 text: "Registro de Atividades"
+                # texto exibido
                 bold: True
+                # texto em negrito (quando suportado)
                 color: 1,1,1,1
+                # cor do texto (branco)
                 halign: "center"
+                # alinhamento horizontal central
                 valign: "middle"
+                # alinhamento vertical ao meio
 
         # === CAIXA QUE MOSTRA ATIVIDADE EM ANDAMENTO (inicialmente escondida) ===
         BoxLayout:
+            # área que aparece somente quando há uma atividade em andamento
             id: active_box
+            # id para controlar visibilidade e texto pelo Python
             size_hint_y: None
+            # altura controlada manualmente
             height: 0
+            # início com altura 0 (escondida)
             opacity: 0
+            # completamente invisível inicialmente
             padding: dp(8)
+            # padding interno
             spacing: dp(8)
+            # espaçamento entre elementos internos
 
             canvas.before:
+                # desenha um fundo suave para ressaltar a caixa
                 Color:
                     rgba: 0.95, 0.95, 0.95, 1
+                    # cor do fundo (quase branco)
                 RoundedRectangle:
                     pos: self.pos
+                    # posição do retângulo arredondado
                     size: self.size
+                    # tamanho do retângulo arredondado
                     radius: [8,]
+                    # raio de arredondamento (8 px nos cantos)
 
             Label:
+                # rótulo dentro da active_box que mostrará texto do tipo de atividade em andamento
                 id: active_label
                 text: ""
+                # começa vazio; preenchido pelo Python quando necessário
                 halign: "left"
+                # alinhamento à esquerda
                 valign: "middle"
+                # alinhamento vertical ao meio
                 color: 0,0,0,1
+                # cor do texto (preto)
 
         # === STATUS FELIZ / INFORMAÇÃO ===
         Label:
+            # rótulo para exibir mensagens de status ao usuário
             id: status_label
             text: "Pronto para começar."
+            # texto padrão
             size_hint_y: None
+            # altura fixa
             height: dp(32)
+            # 32 dp de altura
             halign: "center"
+            # centraliza horizontalmente
             valign: "middle"
+            # centraliza verticalmente
             color: 0,0,0,1
+            # cor preta
 
         # === LINHA: ATIVIDADE SELECIONADA (texto) ===
         BoxLayout:
+            # linha que contém o texto da atividade selecionada
             size_hint_y: None
+            # altura fixa
             height: dp(48)
+            # 48 dp de altura
             padding: dp(8)
+            # padding interno
+
             Label:
+                # rótulo que mostra qual atividade o usuário escolheu
                 id: selected_activity_label
                 text: "Nenhuma atividade selecionada"
+                # texto padrão quando nada foi escolhido
                 halign: "left"
+                # alinhamento à esquerda
                 valign: "middle"
+                # alinhamento vertical ao meio
                 color: 0,0,0,1
+                # cor preta
 
         # === LISTA DE BOTÕES DE ATIVIDADE (Scroll) ===
         ScrollView:
+            # área rolável para comportar muitos botões de atividade
             do_scroll_x: False
+            # desativa rolagem horizontal
             bar_width: dp(8)
+            # largura da barra de rolagem
 
             GridLayout:
+                # container onde os botões serão inseridos dinamicamente (pelo Python)
                 id: activity_buttons
+                # id para o código Python poder adicionar widgets aqui
                 cols: 1
+                # 1 coluna (lista vertical)
                 size_hint_y: None
+                # altura controlada (usa minimum_height)
                 height: self.minimum_height
+                # ajusta a altura ao conteúdo interno (importante para ScrollView)
                 spacing: dp(8)
+                # espaçamento entre os botões
                 padding: dp(4)
+                # padding interno do grid
                 row_default_height: dp(48)
+                # altura padrão de cada linha (botão) dentro do GridLayout
 
         # === DESCRIÇÃO ===
         TextInput:
+            # campo de texto para descrição opcional da atividade
             id: descricao_text
             hint_text: "Descrição (opcional)"
+            # dica mostrada quando vazio
             size_hint_y: None
+            # altura fixa
             height: dp(80)
+            # 80 dp de altura para permitir várias linhas
             size_hint_x: 0.98
+            # largura ocupa 98% (um pequeno padding lateral)
             pos_hint: {"center_x": 0.5}
+            # centraliza horizontalmente
             multiline: True
+            # permite múltiplas linhas de texto
 
         # === AÇÕES (Iniciar / Finalizar / Logout) ===
         BoxLayout:
+            # container horizontal para os botões de ação
             size_hint_y: None
+            # altura fixa
             height: dp(56)
+            # 56 dp de altura
             spacing: dp(8)
+            # espaçamento entre botões
             padding: dp(4)
+            # padding interno
 
             Button:
+                # botão para iniciar a atividade selecionada
                 id: start_button
                 text: "Iniciar"
+                # rótulo do botão
                 on_release: root.acao_iniciar()
+                # quando soltar o clique chama o método acao_iniciar() do root (MainScreen)
                 background_normal: ''
+                # desabilita a imagem padrão do botão (uso de cor sólida)
                 background_color: (0.2, 0.6, 0.2, 1)  # verde padrão do botão iniciar
+                # cor de fundo verde (RGBA 0..1)
 
             Button:
+                # botão para finalizar a atividade em andamento
                 id: end_button
                 text: "Finalizar"
+                # rótulo do botão
                 on_release: root.acao_finalizar()
+                # chama acao_finalizar() no MainScreen quando clicado
                 background_normal: ''
+                # desabilita background normal da plataforma
                 background_color: (0.6, 0.2, 0.2, 1)  # vermelho para finalizar
+                # cor de fundo vermelha
                 disabled: True
+                # começa desabilitado até que haja uma atividade em andamento
 
             Button:
+                # botão para efetuar logout (voltar para tela de login)
                 text: "Logout"
                 on_release: root.logout()
+                # chama logout() no MainScreen
                 background_normal: ''
+                # desabilita background de imagem
                 background_color: (0.5,0.5,0.5,1)
+                # cor cinza para logout
 
         Widget:
+            # widget vazio usado apenas como espaçador final
             size_hint_y: None
+            # desativa size_hint vertical
             height: dp(8)
+            # espaço de 8 dp no final da tela para dar "folga"
+

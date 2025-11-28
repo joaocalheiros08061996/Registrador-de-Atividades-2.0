@@ -33,10 +33,11 @@ Remove-Item -Recurse -Force .\dist   -ErrorAction SilentlyContinue
 Remove-Item -Force .\RegistroAtividades.spec -ErrorAction SilentlyContinue
 
 # comando final ONEFILE sem console (sem assets)
-pyinstaller --noconfirm --clean --onefile --noconsole --name RegistroAtividades 
---add-data "kv/login.kv;kv" 
---add-data "kv/main.kv;kv" 
---add-data ".env;." 
---add-data "assets;assets" 
+pyinstaller --noconfirm --clean --onefile --noconsole --name Registro_Atividades2.0 `
+--add-data "kv/login.kv;kv" `
+--add-data "kv/main.kv;kv" `
+--add-data ".env;." `
+--add-data "assets;assets" `
 src/main.py
+
 
