@@ -9,21 +9,21 @@ O sistema pode ser executado diretamente via Python ou distribuído como execut�
 🧱 Arquitetura do Projeto
 registro_atividades/
 ├── src/
-│   ├── __init__.py
-│   ├── main.py            # Ponto de entrada da aplicação
-│   ├── login.py           # Lógica de autenticação
-│   ├── gui.py             # Controladores de interface (Kivy)
-│   └── handle_db.py       # Integração com banco (Supabase)
+│   ├── __init__.py            # Inicialização do módulo
+│   ├── main.py                # Ponto de entrada da aplicação
+│   ├── login.py               # Lógica de autenticação
+│   ├── gui.py                 # Controladores de interface (Kivy)
+│   └── handle_db.py           # Integração com banco (Supabase)
 ├── kv/
-│   ├── login.kv           # Interface de login
-│   └── main.kv            # Interface principal
+│   ├── login.kv               # Interface de login
+│   └── main.kv                # Interface principal
 ├── assets/
-│   └── logo.png           # Logo do aplicativo
-├── .env                   # Configurações sensíveis (chaves Supabase)
-├── requirements.txt       # Dependências do projeto
-├── README.md              # Documentação
-├── .gitignore             # Ignora venv/, __pycache__/ etc.
-└── setup.py               # (Opcional) Instalação via pip -e
+│   └── logo.png               # Logo do aplicativo
+├── .env                       # Configurações sensíveis (chaves Supabase)
+├── requirements.txt           # Dependências do projeto
+├── README.md                  # Documentação
+├── .gitignore                 # Ignora venv/, __pycache__/, build/, dist/, etc.
+└── setup.py                   # (Opcional) Instalação via pip -e
 
 🚀 Como Executar Localmente
 🔽 1. Clonar o repositório
